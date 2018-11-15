@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GreenwheelsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PriceKm" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="PriceHour" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="VehicleID" Type="int" Nullable="false" />
+          <Property Name="SubsciptionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeSubscription">
+          <Key>
+            <PropertyRef Name="SubscriptionID" />
+          </Key>
+          <Property Name="SubscriptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subscription" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PerMonth" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="TypeVehicle">
+          <Key>
+            <PropertyRef Name="VehicleID" />
+          </Key>
+          <Property Name="VehicleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vehicle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Tariffs__Subscip__48CFD27E">
+          <End Role="TypeSubscription" Type="Self.TypeSubscription" Multiplicity="1" />
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSubscription">
+              <PropertyRef Name="SubscriptionID" />
+            </Principal>
+            <Dependent Role="Tariffs">
+              <PropertyRef Name="SubsciptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tariffs__Vehicle__47DBAE45">
+          <End Role="TypeVehicle" Type="Self.TypeVehicle" Multiplicity="1" />
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeVehicle">
+              <PropertyRef Name="VehicleID" />
+            </Principal>
+            <Dependent Role="Tariffs">
+              <PropertyRef Name="VehicleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GreenwheelsModelStoreContainer">
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeSubscription" EntityType="Self.TypeSubscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeVehicle" EntityType="Self.TypeVehicle" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tariffs__Subscip__48CFD27E" Association="Self.FK__Tariffs__Subscip__48CFD27E">
+            <End Role="TypeSubscription" EntitySet="TypeSubscription" />
+            <End Role="Tariffs" EntitySet="Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tariffs__Vehicle__47DBAE45" Association="Self.FK__Tariffs__Vehicle__47DBAE45">
+            <End Role="TypeVehicle" EntitySet="TypeVehicle" />
+            <End Role="Tariffs" EntitySet="Tariffs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GreenwheelsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TypeSubscription">
+          <Key>
+            <PropertyRef Name="SubscriptionID" />
+          </Key>
+          <Property Name="SubscriptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subscription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E" FromRole="TypeSubscription" ToRole="Tariff" />
+          <Property Name="PerMonth" Type="Decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="TypeVehicle">
+          <Key>
+            <PropertyRef Name="VehicleID" />
+          </Key>
+          <Property Name="VehicleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vehicle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45" FromRole="TypeVehicle" ToRole="Tariff" />
+          </EntityType>
+        <EntityContainer Name="GreenwheelsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TypeSubscriptions" EntityType="Self.TypeSubscription" />
+          <EntitySet Name="TypeVehicles" EntityType="Self.TypeVehicle" />
+          <EntitySet Name="Tariffs" EntityType="GreenwheelsModel.Tariff" />
+          <AssociationSet Name="FK__Tariffs__Subscip__48CFD27E" Association="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E">
+            <End Role="TypeSubscription" EntitySet="TypeSubscriptions" />
+            <End Role="Tariff" EntitySet="Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tariffs__Vehicle__47DBAE45" Association="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45">
+            <End Role="TypeVehicle" EntitySet="TypeVehicles" />
+            <End Role="Tariff" EntitySet="Tariffs" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Tariff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PriceKm" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="PriceHour" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="VehicleID" Type="Int32" Nullable="false" />
+          <Property Name="SubsciptionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeSubscription" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E" FromRole="Tariff" ToRole="TypeSubscription" />
+          <NavigationProperty Name="TypeVehicle" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45" FromRole="Tariff" ToRole="TypeVehicle" />
+        </EntityType>
+        <Association Name="FK__Tariffs__Subscip__48CFD27E">
+          <End Type="GreenwheelsModel.TypeSubscription" Role="TypeSubscription" Multiplicity="1" />
+          <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSubscription">
+              <PropertyRef Name="SubscriptionID" />
+            </Principal>
+            <Dependent Role="Tariff">
+              <PropertyRef Name="SubsciptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tariffs__Vehicle__47DBAE45">
+          <End Type="GreenwheelsModel.TypeVehicle" Role="TypeVehicle" Multiplicity="1" />
+          <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeVehicle">
+              <PropertyRef Name="VehicleID" />
+            </Principal>
+            <Dependent Role="Tariff">
+              <PropertyRef Name="VehicleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GreenwheelsModelStoreContainer" CdmEntityContainer="GreenwheelsEntities">
+          <EntitySetMapping Name="TypeSubscriptions">
+            <EntityTypeMapping TypeName="GreenwheelsModel.TypeSubscription">
+              <MappingFragment StoreEntitySet="TypeSubscription">
+                <ScalarProperty Name="PerMonth" ColumnName="PerMonth" />
+                <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+                <ScalarProperty Name="Subscription" ColumnName="Subscription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeVehicles">
+            <EntityTypeMapping TypeName="GreenwheelsModel.TypeVehicle">
+              <MappingFragment StoreEntitySet="TypeVehicle">
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tariffs">
+            <EntityTypeMapping TypeName="GreenwheelsModel.Tariff">
+              <MappingFragment StoreEntitySet="Tariffs">
+                <ScalarProperty Name="SubsciptionID" ColumnName="SubsciptionID" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="PriceHour" ColumnName="PriceHour" />
+                <ScalarProperty Name="PriceKm" ColumnName="PriceKm" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

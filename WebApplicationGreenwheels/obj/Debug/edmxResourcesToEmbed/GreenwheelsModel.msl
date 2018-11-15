@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GreenwheelsModelStoreContainer" CdmEntityContainer="GreenwheelsEntities">
+    <EntitySetMapping Name="TypeSubscriptions">
+      <EntityTypeMapping TypeName="GreenwheelsModel.TypeSubscription">
+        <MappingFragment StoreEntitySet="TypeSubscription">
+          <ScalarProperty Name="PerMonth" ColumnName="PerMonth" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="Subscription" ColumnName="Subscription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeVehicles">
+      <EntityTypeMapping TypeName="GreenwheelsModel.TypeVehicle">
+        <MappingFragment StoreEntitySet="TypeVehicle">
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tariffs">
+      <EntityTypeMapping TypeName="GreenwheelsModel.Tariff">
+        <MappingFragment StoreEntitySet="Tariffs">
+          <ScalarProperty Name="SubsciptionID" ColumnName="SubsciptionID" />
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="PriceHour" ColumnName="PriceHour" />
+          <ScalarProperty Name="PriceKm" ColumnName="PriceKm" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

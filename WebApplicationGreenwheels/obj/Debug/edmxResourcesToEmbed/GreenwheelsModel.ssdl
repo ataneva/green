@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GreenwheelsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Tariffs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriceKm" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="PriceHour" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="VehicleID" Type="int" Nullable="false" />
+    <Property Name="SubsciptionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypeSubscription">
+    <Key>
+      <PropertyRef Name="SubscriptionID" />
+    </Key>
+    <Property Name="SubscriptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subscription" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PerMonth" Type="decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="TypeVehicle">
+    <Key>
+      <PropertyRef Name="VehicleID" />
+    </Key>
+    <Property Name="VehicleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vehicle" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Tariffs__Subscip__48CFD27E">
+    <End Role="TypeSubscription" Type="Self.TypeSubscription" Multiplicity="1" />
+    <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeSubscription">
+        <PropertyRef Name="SubscriptionID" />
+      </Principal>
+      <Dependent Role="Tariffs">
+        <PropertyRef Name="SubsciptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tariffs__Vehicle__47DBAE45">
+    <End Role="TypeVehicle" Type="Self.TypeVehicle" Multiplicity="1" />
+    <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeVehicle">
+        <PropertyRef Name="VehicleID" />
+      </Principal>
+      <Dependent Role="Tariffs">
+        <PropertyRef Name="VehicleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GreenwheelsModelStoreContainer">
+    <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeSubscription" EntityType="Self.TypeSubscription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeVehicle" EntityType="Self.TypeVehicle" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Tariffs__Subscip__48CFD27E" Association="Self.FK__Tariffs__Subscip__48CFD27E">
+      <End Role="TypeSubscription" EntitySet="TypeSubscription" />
+      <End Role="Tariffs" EntitySet="Tariffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tariffs__Vehicle__47DBAE45" Association="Self.FK__Tariffs__Vehicle__47DBAE45">
+      <End Role="TypeVehicle" EntitySet="TypeVehicle" />
+      <End Role="Tariffs" EntitySet="Tariffs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

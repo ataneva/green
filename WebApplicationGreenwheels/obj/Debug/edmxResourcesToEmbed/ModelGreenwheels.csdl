@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GreenwheelsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TypeSubscription">
+    <Key>
+      <PropertyRef Name="SubscriptionID" />
+    </Key>
+    <Property Name="Subscription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SubscriptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__36B12243" FromRole="TypeSubscription" ToRole="Tariff" />
+  </EntityType>
+  <EntityType Name="TypeVehicle">
+    <Key>
+      <PropertyRef Name="VehicleID" />
+    </Key>
+    <Property Name="Vehicle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VehicleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__37A5467C" FromRole="TypeVehicle" ToRole="Tariff" />
+  </EntityType>
+  <EntityContainer Name="GreenwheelsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TypeSubscriptions" EntityType="Self.TypeSubscription" />
+    <EntitySet Name="TypeVehicles" EntityType="Self.TypeVehicle" />
+    <EntitySet Name="Tariffs" EntityType="GreenwheelsModel.Tariff" />
+    <AssociationSet Name="FK__Tariffs__Subscip__37A5467C" Association="GreenwheelsModel.FK__Tariffs__Subscip__37A5467C">
+      <End Role="TypeVehicle" EntitySet="TypeVehicles" />
+      <End Role="Tariff" EntitySet="Tariffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tariffs__Vehicle__36B12243" Association="GreenwheelsModel.FK__Tariffs__Vehicle__36B12243">
+      <End Role="TypeSubscription" EntitySet="TypeSubscriptions" />
+      <End Role="Tariff" EntitySet="Tariffs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tariff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriceKm" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="PriceHour" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="VehicleID" Type="Int32" Nullable="false" />
+    <Property Name="SubsciptionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TypeVehicle" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__37A5467C" FromRole="Tariff" ToRole="TypeVehicle" />
+    <NavigationProperty Name="TypeSubscription" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__36B12243" FromRole="Tariff" ToRole="TypeSubscription" />
+  </EntityType>
+  <Association Name="FK__Tariffs__Subscip__37A5467C">
+    <End Type="GreenwheelsModel.TypeVehicle" Role="TypeVehicle" Multiplicity="1" />
+    <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeVehicle">
+        <PropertyRef Name="VehicleID" />
+      </Principal>
+      <Dependent Role="Tariff">
+        <PropertyRef Name="SubsciptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tariffs__Vehicle__36B12243">
+    <End Type="GreenwheelsModel.TypeSubscription" Role="TypeSubscription" Multiplicity="1" />
+    <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeSubscription">
+        <PropertyRef Name="SubscriptionID" />
+      </Principal>
+      <Dependent Role="Tariff">
+        <PropertyRef Name="VehicleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

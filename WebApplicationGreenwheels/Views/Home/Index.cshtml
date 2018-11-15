@@ -1,0 +1,47 @@
+﻿@model WebApplicationGreenwheel.Helpers.Calculation
+@using System.Linq
+
+<form class="form-horizontal" action="@Url.Action("Index", "Home")" method="post">
+
+    <div class="jumbotron">
+        <h1>Greenwheels</h1>
+        <p class="lead">Greenwheels has always a subscription that fits you the best. To help you find it, please provide the information below. We will calculate it for you. You can choose from 3 subscriptions - Occasional (no extra charge per month), Regular (extra 10 per month), Frequent (extra 25 per month). </p>
+        <br />
+        <p>Please, select a car type?</p>
+        <select id="template" name="carDropDownList">
+            <option value="small">Small</option>
+            <option value="large">Large</option>
+            <option value="electric">Electric</option>
+        </select>
+        <p>How many kilometers you want to use the selected car?</p>
+        @Html.TextBoxFor(model => model.Km) 
+        <p>How many hours you want to use the selected car?</p>
+        @Html.TextBoxFor(model => model.Hours)
+        <input type="submit" class="btn btn-primary btn-lg" value="Calculate"/>
+        @if (Model != null)
+        {
+            <p>The best subscription is: @Model.Subscription</p>
+            <p>The total amount is: @Model.SumTotal</p>
+        }
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Occasional</h2>
+        <p>
+            Choose Occasional if you travel need to use the car less than one time per month. Then this is perfect for you. This is amazin opportunity and cheap compared to our competitors.
+        </p>
+        <p><a class="btn btn-default" href="https://www.greenwheels.com/nl/nl/nl/nl/nl/de/prive/tarieven">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Regular</h2>
+        <p>With the Regular subscirption you travel approximately one time per month. That can be the beach, to visit relatives, one-day trip or else.</p>
+        <p><a class="btn btn-default" href="https://www.greenwheels.com/nl/nl/nl/nl/nl/de/prive/tarieven">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Frequent</h2>
+        <p>This subscription is perfect for our frequent drivers - betwwen one and five times per month. That is the best option to choose if you do not have a car or do not intend to buy.</p>
+        <p><a class="btn btn-default" href="https://www.greenwheels.com/nl/nl/nl/nl/nl/de/prive/tarieven">Learn more &raquo;</a></p>
+    </div>
+</div>

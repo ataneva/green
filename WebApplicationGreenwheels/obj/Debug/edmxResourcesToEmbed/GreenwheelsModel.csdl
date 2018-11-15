@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GreenwheelsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TypeSubscription">
+    <Key>
+      <PropertyRef Name="SubscriptionID" />
+    </Key>
+    <Property Name="SubscriptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subscription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E" FromRole="TypeSubscription" ToRole="Tariff" />
+    <Property Name="PerMonth" Type="Decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="TypeVehicle">
+    <Key>
+      <PropertyRef Name="VehicleID" />
+    </Key>
+    <Property Name="VehicleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vehicle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tariffs" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45" FromRole="TypeVehicle" ToRole="Tariff" />
+  </EntityType>
+  <EntityContainer Name="GreenwheelsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TypeSubscriptions" EntityType="Self.TypeSubscription" />
+    <EntitySet Name="TypeVehicles" EntityType="Self.TypeVehicle" />
+    <EntitySet Name="Tariffs" EntityType="GreenwheelsModel.Tariff" />
+    <AssociationSet Name="FK__Tariffs__Subscip__48CFD27E" Association="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E">
+      <End Role="TypeSubscription" EntitySet="TypeSubscriptions" />
+      <End Role="Tariff" EntitySet="Tariffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tariffs__Vehicle__47DBAE45" Association="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45">
+      <End Role="TypeVehicle" EntitySet="TypeVehicles" />
+      <End Role="Tariff" EntitySet="Tariffs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tariff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriceKm" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="PriceHour" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="VehicleID" Type="Int32" Nullable="false" />
+    <Property Name="SubsciptionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TypeSubscription" Relationship="GreenwheelsModel.FK__Tariffs__Subscip__48CFD27E" FromRole="Tariff" ToRole="TypeSubscription" />
+    <NavigationProperty Name="TypeVehicle" Relationship="GreenwheelsModel.FK__Tariffs__Vehicle__47DBAE45" FromRole="Tariff" ToRole="TypeVehicle" />
+  </EntityType>
+  <Association Name="FK__Tariffs__Subscip__48CFD27E">
+    <End Type="GreenwheelsModel.TypeSubscription" Role="TypeSubscription" Multiplicity="1" />
+    <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeSubscription">
+        <PropertyRef Name="SubscriptionID" />
+      </Principal>
+      <Dependent Role="Tariff">
+        <PropertyRef Name="SubsciptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tariffs__Vehicle__47DBAE45">
+    <End Type="GreenwheelsModel.TypeVehicle" Role="TypeVehicle" Multiplicity="1" />
+    <End Type="GreenwheelsModel.Tariff" Role="Tariff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeVehicle">
+        <PropertyRef Name="VehicleID" />
+      </Principal>
+      <Dependent Role="Tariff">
+        <PropertyRef Name="VehicleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
